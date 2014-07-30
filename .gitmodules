@@ -8,3 +8,11 @@
 [submodule "sites/all/modules/shedow_module_git"]
 	path = sites/all/modules/shedow_module_git
 	url = git://github.com/izvaerg/shedow.git
+[submodule "sites/all/modules/contrib/admin_menu"]
+	path = sites/all/modules/contrib/admin_menu
+	url = http://git.drupal.org/project/admin_menu.git
+	branch = 7.x-3.x
+[submodule "sites/all/modules/contrib/ctools"]
+	path = sites/all/modules/contrib/ctools
+	url = http://git.drupal.org/project/ctools.git
+	branch = 7.x-1.x
