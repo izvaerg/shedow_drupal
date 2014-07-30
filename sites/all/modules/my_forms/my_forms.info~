@@ -1,0 +1,4 @@
+name = My forms module
+description = Module for working with forms
+version = 7.x
+core = 7.x

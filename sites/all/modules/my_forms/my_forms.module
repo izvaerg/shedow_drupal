@@ -1,0 +1,116 @@
+<?php
+
+/**
+ *   Module for rendering form.
+ */
+
+/**
+ *  Implements hook_menu().
+ */
+function my_forms_menu() {
+$items = array();
+  $items['my-forms'] = array(
+    'title' => 'Contacts',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('my_forms_form_page'),
+    'file' => 'my_forms.pages.inc',
+    'access callback' => TRUE,
+  );
+return $items;
+}
+
+/**
+ *  hook_form_alter function for two forms:
+ *  custom and Webform.
+ *  Checks a validation of e-mail and plone number.
+ */
+function my_forms_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'my_forms_form_page') {
+    $form['#validate'][] = 'my_forms_my_contacts_validation';
+  }
+  if ($form_id == 'webform_client_form_9') {
+    $form['#validate'][] = 'my_forms_my_webform_validation';
+  }
+}
+
+/**
+ *  Validation function for Webform form,
+ *  checks validation of phone number.
+ */
+function my_forms_my_webform_validation(&$form, &$form_state) {
+  if (($form_state['values']['submitted']['phone_number']) and (!ctype_digit($form_state['values']['submitted']['phone_number']))) {
+    form_set_error('phone_number', t('Incorrect phone number'));
+  }
+}
+
+/**
+ *  Validation function for my custom form.
+ *  Checks validation of e-mail and phone number
+ */
+function my_forms_my_contacts_validation(&$form, &$form_state) {
+  // only digits can be placed in Phone Number field.
+  if (($form_state['values']['phone_number']) && (!ctype_digit($form_state['values']['phone_number']))) {
+    form_set_error('phone_number', t('Incorrect phone number'));
+  }
+  if (!valid_email_address($form_state['values']['e_mail'])) {
+    form_set_error('e_mail',t('Invalid e-mail format!'));
+  }
+}
+
+/**
+ *   Function for submitting the form.
+ */
+function my_forms_form_page_submit($form, &$form_state) {
+  $nick = $form_state['values']['nick_name']; // Short name for nick name.
+  $mail = $form_state['values']['e_mail']; // Short name for e-mail.
+
+  // Show the nick name (required field).
+  drupal_set_message(t('Nick Name: @nick', array('@nick' => $nick)));
+
+  // Show first name if written.
+  if (($form_state['values']['first_name'] != NULL)) {
+    drupal_set_message(t('First Name: @first', array(
+      '@first' => $form_state['values']['first_name']
+    )));
+  }
+
+  // Show last name if written.
+  if (($form_state['values']['last_name'] != NULL)) {
+    drupal_set_message(t('Last Name: @last', array(
+      '@last' => $form_state['values']['last_name']
+    )));
+  }
+
+  // Show e-mail (requried field).
+  drupal_set_message(t('E-mail: @mail', array('@mail' => $mail)));
+
+  // Show phone number if it is written.
+  if (($form_state['values']['phone_number'] != NULL)) {
+    drupal_set_message(t('Phone Number: @phone', array(
+      '@phone' => $form_state['values']['phone_number']
+    )));
+  }
+
+  // Checking gender. if user doesn't choose it - don't show it.
+  if (($form_state['values']['gender'] != NULL)) {
+    switch ($form_state['values']['gender']) {
+      // radio buttons: 
+      // 0 = male
+      // 1 = female
+      case 0:
+        $gender = t('Male');
+        break;
+      default:
+        $gender = t('Female');
+        break;
+    }
+    drupal_set_message(t('Gender: @gender', array('@gender' => $gender)));
+  }
+
+  // Show the country and the message.
+  $country = $form_state['values']['country'];
+  drupal_set_message(t('Country: @country', array('@country' => $country)));
+  drupal_set_message(t('Message: @message', array(
+    '@message' => $form_state['values']['message']
+  )));
+}

@@ -1,0 +1,44 @@
+<?php
+/**
+ *   Module of demonstration the work of hook_theme.
+ */
+
+/**
+ *   Implements hook_menu.
+ */
+function my_theming_menu() {
+$items = array();
+$items['my_theming'] = array(
+  'title' => 'Theming page',
+  'description' => 'Simple custom page',
+  'page callback' => 'my_theming_page_content',
+  'file' => 'my_theming.pages.inc',
+  'access callback' => TRUE,
+  'type' => MENU_NORMAL_ITEM,
+  'menu_name' => 'main-menu',
+);
+return $items;
+}
+
+/**
+ *   Implements hook_theme.
+ */
+function my_theming_theme() {
+  return array(
+    'shedow_template' => array(
+      'template' => 'theming-page',
+      'variables' => array('text' => NULL),
+    ),
+    'theme_function' => array(
+      'variables' => array('text' => NULL),
+      ),
+    );
+}
+
+/**
+ *   Function to output the text with our theme.
+ */
+function theme_theme_function($variables) {
+  $output = '<h3><strong>' . $variables['text'] . '</strong></h3>';
+  return $output;
+}
