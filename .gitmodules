@@ -2,3 +2,9 @@
 	path = sites/all/modules/ctools.git
 	url = http://git.drupal.org/project/ctools.git
 	branch = 7.x-1.x
+[submodule "sites/all/modules/my_theming_shedow"]
+	path = sites/all/modules/my_theming_shedow
+	url = git://github.com/izvaerg/shedow.git
+[submodule "sites/all/modules/shedow_module_git"]
+	path = sites/all/modules/shedow_module_git
+	url = git://github.com/izvaerg/shedow.git
