@@ -1,0 +1,10 @@
+<?php 
+function shedow_page_content() {
+	return 'Hello, World!';
+}
+function not_found_content() {
+	return '404 not found.';
+}
+function access_denied_content() {
+	return '403 access denied. You have not permission to to this';
+}

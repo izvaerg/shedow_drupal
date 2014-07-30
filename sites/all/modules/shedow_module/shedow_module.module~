@@ -1,0 +1,29 @@
+<?php
+function shedow_module_menu() {
+$items = array();
+$items['shedow_page'] = array(
+	'title' => 'Simple page',
+	'description' => 'Simple custom page',
+	'page callback' => 'shedow_page_content',
+	'file' => 'shedow.pages.inc',
+	'access callback' => TRUE,
+	'type' => MENU_NORMAL_ITEM,
+	'menu_name' => 'main-menu',
+);
+$items['page-not-found'] = array (
+	'title' => 'Not Found',
+	'page callback' => 'not_found_content',
+	'access callback' => TRUE,
+	'type' => MENU_CALLBACK,
+	'file' => 'shedow.pages.inc',
+);
+$items['access-denied'] = array (
+	'title' => 'Not Found',
+	'page callback' => 'access_denied_content',
+	'access callback' => TRUE,
+	'type' => MENU_CALLBACK,
+	'file' => 'shedow.pages.inc',
+);
+	return $items;
+}
+
